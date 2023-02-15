@@ -6,7 +6,10 @@ import './index.css'
 import Loader from 'react-loader-spinner'
 
 import Header from '../Header'
+import SmHeader from '../SmHeader'
+
 import ReactSlick from '../ReactSlick'
+
 import PostItemDetails from '../PostItemDetails'
 
 const status = {
@@ -208,14 +211,14 @@ class Home extends Component {
             </div>
           </>
         ) : (
-          <div className="search-failure-container">
+          <div className="no-search-failure-container">
             <img
               src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675865026/samples/InstaShare%20PNG/Group_udoax3.png"
               alt="search not found"
-              className="search-failure-view-img"
+              className="no-search-view-img"
             />
-            <h1 className="search-error-title">Search Not Found</h1>
-            <p className="search-error-text">
+            <h1 className="no-search-title">Search Not Found</h1>
+            <p className="no-search-text">
               Try different keyword or search again
             </p>
           </div>
@@ -276,15 +279,15 @@ class Home extends Component {
     <div className="failure-bg">
       <div className="home-failure-container">
         <img
-          src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675777842/samples/InstaShare%20PNG/Icon_t6zrkg.png"
+          src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675935116/samples/InstaShare%20PNG/Group_7522_expew0.png"
           alt="failure view"
-          className="home-failure-view-img"
+          className="search-failure-view-img"
         />
         <p className="home-error-msg">Something went wrong. Please try again</p>
         <button
           type="button"
           className="home-failure-btn"
-          onClick={this.onClickedSearchTryAgain}
+          onClick={this.onClickedStoryTryAgain}
         >
           Try again
         </button>
@@ -355,17 +358,31 @@ class Home extends Component {
 
   render() {
     const {searchCaption, isSearched} = this.state
+
     return (
       <div className="homePage-container">
-        <Header
-          searchCaption={searchCaption}
-          onClickedSearchBar={this.onClickedSearchBar}
-          onChangeSearchStatus={this.onChangeSearchStatus}
-          selectedRoute={isSearched === false ? 'Home' : undefined}
-        />
+        <div className="lg-header">
+          <Header
+            searchCaption={searchCaption}
+            onClickedSearchBar={this.onClickedSearchBar}
+            onChangeSearchStatus={this.onChangeSearchStatus}
+            selectedRoute={isSearched === false ? 'Home' : undefined}
+          />
+        </div>
+        <div className="sm-header">
+          <SmHeader
+            searchCaption={searchCaption}
+            onClickedSearchBar={this.onClickedSearchBar}
+            onChangeSearchStatus={this.onChangeSearchStatus}
+            selectedRoute={isSearched === false ? 'Home' : 'Search'}
+          />
+        </div>
         <div className="home-post-container">
           <div className="home-content-container">
-            {isSearched === false ? this.renderStorySection() : null}
+            <div className="home-story-container">
+              {isSearched === false ? this.renderStorySection() : null}
+            </div>
+            <hr className="home-story-line" />
             {isSearched === false ? (
               <div className="post-section">{this.renderPostSection()}</div>
             ) : (

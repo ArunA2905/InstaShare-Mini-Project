@@ -6,6 +6,12 @@
   border-radius: 4px 4px 0px 0px;
   min-height: 200px;
 }
+@media all and (max-width: 768px) {
+  .post-item-details-card {
+    background: #fafafa;
+    border: none;
+  }
+}
 .username-profile-card {
   display: flex;
   align-items: center;
@@ -28,10 +34,24 @@
   justify-content: center;
   align-items: center;
 }
+@media all and (max-width: 768px) {
+  .profile-pic-card {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+  }
+}
 .user-profile {
   height: 45px;
   width: 45px;
   border-radius: 25px;
+}
+@media all and (max-width: 768px) {
+  .user-profile {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+  }
 }
 .user-name {
   font-family: 'Roboto';
@@ -42,11 +62,25 @@
   color: #262626;
   padding-left: 12px;
 }
+@media all and (max-width: 768px) {
+  .user-name {
+    font-size: 16px;
+    line-height: 20px;
+  }
+}
 .post-img {
   width: 100%;
-  height: 700px;
+  height: 600px;
   padding-top: 20px;
   padding-bottom: 10px;
+}
+@media all and (max-width: 768px) {
+  .post-img {
+    width: 100%;
+    height: 500px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+  }
 }
 .like-comment-share-card {
   display: flex;
@@ -56,6 +90,11 @@
 .icon {
   font-size: 30px;
   padding: 0px;
+}
+@media all and (max-width: 768px) {
+  .icon {
+    font-size: 26px;
+  }
 }
 .like-btn {
   border: none;

@@ -8,6 +8,7 @@ import {BsGrid3X3} from 'react-icons/bs'
 import {BiCamera} from 'react-icons/bi'
 
 import Header from '../Header'
+import SmHeader from '../SmHeader'
 import UserPostItem from '../UserPostItem'
 
 import PostItemDetails from '../PostItemDetails'
@@ -93,25 +94,35 @@ class MyProfile extends Component {
     } = myProfile
 
     return (
-      <div className="profile-details-container">
-        <img src={profilePic} alt="my profile" className="profile-pic" />
-        <div className="profile-details-card">
-          <h1 className="profile-user-name">{userName}</h1>
-          <div className="user-count-card">
-            <p className="user-count-details">
-              <span className="count">{postsCount}</span>posts
-            </p>
-            <p className="user-count-details">
-              <span className="count">{followersCount}</span>followers
-            </p>
-            <p className="user-count-details">
-              <span className="count">{followingCount}</span>following
-            </p>
+      <>
+        <h1 className="profile-user-name sm-profile-user-name">{userName}</h1>
+        <div className="profile-details-container">
+          <img src={profilePic} alt="my profile" className="profile-pic" />
+          <div className="profile-details-card">
+            <h1 className="profile-user-name lg-profile-user-name">
+              {userName}
+            </h1>
+            <div className="profile-count-container">
+              <div className="profile-count-card">
+                <span className="count">{postsCount}</span>
+                <p className="profile-count-details">posts</p>
+              </div>
+              <div className="profile-count-card">
+                <span className="count">{followersCount}</span>
+                <p className="profile-count-details">followers</p>
+              </div>
+              <div className="profile-count-card">
+                <span className="count">{followingCount}</span>
+                <p className="profile-count-details">following</p>
+              </div>
+            </div>
+            <p className="lg-profile-name-bio profile-name-bio">{userID}</p>
+            <p className="lg-profile-bio profile-bio">{userBio}</p>
           </div>
-          <p className="user-name-bio">{userID}</p>
-          <p className="user-bio">{userBio}</p>
         </div>
-      </div>
+        <p className="sm-profile-name-bio profile-name-bio">{userID}</p>
+        <p className="sm-profile-bio profile-bio">{userBio}</p>
+      </>
     )
   }
 
@@ -119,10 +130,10 @@ class MyProfile extends Component {
     const {storyList} = this.state
 
     return (
-      <ul className="user-story-container">
+      <ul className="myProfile-story-container">
         {storyList.map(each => (
-          <li key={each.id} className="user-story-card">
-            <img src={each.image} alt="my story" className="user-story" />
+          <li key={each.id} className="myProfile-story-card">
+            <img src={each.image} alt="my story" className="myProfile-story" />
           </li>
         ))}
       </ul>
@@ -134,12 +145,12 @@ class MyProfile extends Component {
 
     return (
       <>
-        <div className="post-card">
-          <BsGrid3X3 className="post-card-icon" />
-          <h1 className="posts-title">Posts</h1>
+        <div className="profile-post-card">
+          <BsGrid3X3 className="profile-post-card-icon" />
+          <h1 className="profile-posts-title">Posts</h1>
         </div>
         {postList.length > 0 ? (
-          <ul className="post-item-container">
+          <ul className="profile-post-item-container">
             {postList.map(each => (
               <UserPostItem key={each.id} postItem={each} route="my" />
             ))}
@@ -230,9 +241,9 @@ class MyProfile extends Component {
       headers: {Authorization: `Bearer ${jwtToken}`},
     }
     const response = await fetch(url, options)
-    const data = await response.json()
 
-    if (data.posts.length > 0) {
+    if (response.ok) {
+      const data = await response.json()
       const updatedUserPostDetails = data.posts.map(each => ({
         postId: each.post_id,
         userId: each.user_id,
@@ -286,14 +297,22 @@ class MyProfile extends Component {
   }
 
   renderSearchFailureView = () => (
-    <div className="search-failure-container">
-      <img
-        src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675865026/samples/InstaShare%20PNG/Group_udoax3.png"
-        alt="search not found"
-        className="search-failure-view-img"
-      />
-      <p className="search-error-title">Search Not Found</p>
-      <p className="search-error-text">Try different keyword or search again</p>
+    <div className="failure-bg">
+      <div className="home-failure-container">
+        <img
+          src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675935116/samples/InstaShare%20PNG/Group_7522_expew0.png"
+          alt="failure view"
+          className="search-failure-view-img"
+        />
+        <p className="home-error-msg">Something went wrong. Please try again</p>
+        <button
+          type="button"
+          className="home-failure-btn"
+          onClick={this.onClickedStoryTryAgain}
+        >
+          Try again
+        </button>
+      </div>
     </div>
   )
 
@@ -302,14 +321,30 @@ class MyProfile extends Component {
 
     return (
       <>
-        <h1 className="search-heading">Search Results</h1>
-        <div className="search-card-container">
-          <ul className="post-list-container">
-            {searchPostList.map(eachItem => (
-              <PostItemDetails postItem={eachItem} key={eachItem.postId} />
-            ))}
-          </ul>
-        </div>
+        {searchPostList.length > 0 ? (
+          <>
+            <h1 className="search-heading">Search Results</h1>
+            <div className="search-card-container">
+              <ul className="post-list-container">
+                {searchPostList.map(eachItem => (
+                  <PostItemDetails postItem={eachItem} key={eachItem.postId} />
+                ))}
+              </ul>
+            </div>
+          </>
+        ) : (
+          <div className="no-search-failure-container">
+            <img
+              src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675865026/samples/InstaShare%20PNG/Group_udoax3.png"
+              alt="search not found"
+              className="no-search-view-img"
+            />
+            <h1 className="no-search-title">Search Not Found</h1>
+            <p className="no-search-text">
+              Try different keyword or search again
+            </p>
+          </div>
+        )}
       </>
     )
   }
@@ -338,11 +373,20 @@ class MyProfile extends Component {
     const {isSearched} = this.state
     return (
       <div className="profilePage-container">
-        <Header
-          onClickedSearchBar={this.onClickedSearchBar}
-          onChangeSearchStatus={this.onChangeSearchStatus}
-          selectedRoute={isSearched === false ? 'my-Profile' : undefined}
-        />
+        <div className="lg-header">
+          <Header
+            onClickedSearchBar={this.onClickedSearchBar}
+            onChangeSearchStatus={this.onChangeSearchStatus}
+            selectedRoute={isSearched === false ? 'my-Profile' : undefined}
+          />
+        </div>
+        <div className="sm-header">
+          <SmHeader
+            onClickedSearchBar={this.onClickedSearchBar}
+            onChangeSearchStatus={this.onChangeSearchStatus}
+            selectedRoute={isSearched === false ? 'my-Profile' : 'Search'}
+          />
+        </div>
         <div className="profile-section-container">
           <div className="profile-content-container">
             {isSearched === false

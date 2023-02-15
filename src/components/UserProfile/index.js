@@ -7,6 +7,8 @@ import {BsGrid3X3} from 'react-icons/bs'
 import {BiCamera} from 'react-icons/bi'
 
 import Header from '../Header'
+import SmHeader from '../SmHeader'
+
 import UserPostItem from '../UserPostItem'
 
 import PostItemDetails from '../PostItemDetails'
@@ -92,25 +94,39 @@ class UserProfile extends Component {
       userID,
     } = myProfile
     return (
-      <div className="user-profile-details-container">
-        <img src={profilePic} alt="user profile" className="user-profile-pic" />
-        <div className="user-profile-details-card">
-          <h1 className="profile-user-name">{userName}</h1>
-          <div className="user-count-card">
-            <p className="user-count-details">
-              <span className="count">{postsCount}</span>posts
-            </p>
-            <p className="user-count-details">
-              <span className="count">{followersCount}</span>followers
-            </p>
-            <p className="user-count-details">
-              <span className="count">{followingCount}</span>following
-            </p>
+      <>
+        <h1 className="user-profile-name sm-user-profile-name">{userName}</h1>
+        <div className="user-profile-details-container">
+          <img
+            src={profilePic}
+            alt="user profile"
+            className="user-profile-pic"
+          />
+          <div className="user-profile-details-card">
+            <h1 className="user-profile-name lg-user-profile-name">
+              {userName}
+            </h1>
+            <div className="user-count-container">
+              <div className="user-count-card">
+                <span className="user-count">{postsCount}</span>
+                <p className="user-count-details">posts</p>
+              </div>
+              <div className="user-count-card">
+                <span className="user-count">{followersCount}</span>
+                <p className="user-count-details">followers</p>
+              </div>
+              <div className="user-count-card">
+                <span className="user-count">{followingCount}</span>
+                <p className="user-count-details">following</p>
+              </div>
+            </div>
+            <p className="lg-user-name-bio user-name-bio">{userID}</p>
+            <p className="lg-user-bio user-bio">{userBio}</p>
           </div>
-          <p className="user-name-bio">{userID}</p>
-          <p className="user-bio">{userBio}</p>
         </div>
-      </div>
+        <p className="sm-user-name-bio user-name-bio">{userID}</p>
+        <p className="sm-user-bio user-bio">{userBio}</p>
+      </>
     )
   }
 
@@ -229,9 +245,9 @@ class UserProfile extends Component {
       headers: {Authorization: `Bearer ${jwtToken}`},
     }
     const response = await fetch(url, options)
-    const data = await response.json()
 
-    if (data.posts.length > 0) {
+    if (response.ok) {
+      const data = await response.json()
       const updatedUserPostDetails = data.posts.map(each => ({
         postId: each.post_id,
         userId: each.user_id,
@@ -285,14 +301,22 @@ class UserProfile extends Component {
   }
 
   renderSearchFailureView = () => (
-    <div className="search-failure-container">
-      <img
-        src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675865026/samples/InstaShare%20PNG/Group_udoax3.png"
-        alt="search not found"
-        className="search-failure-view-img"
-      />
-      <p className="search-error-title">Search Not Found</p>
-      <p className="search-error-text">Try different keyword or search again</p>
+    <div className="failure-bg">
+      <div className="home-failure-container">
+        <img
+          src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675935116/samples/InstaShare%20PNG/Group_7522_expew0.png"
+          alt="failure view"
+          className="search-failure-view-img"
+        />
+        <p className="home-error-msg">Something went wrong. Please try again</p>
+        <button
+          type="button"
+          className="home-failure-btn"
+          onClick={this.onClickedStoryTryAgain}
+        >
+          Try again
+        </button>
+      </div>
     </div>
   )
 
@@ -301,14 +325,30 @@ class UserProfile extends Component {
 
     return (
       <>
-        <h1 className="search-heading">Search Results</h1>
-        <div className="search-card-container">
-          <ul className="post-list-container">
-            {searchPostList.map(eachItem => (
-              <PostItemDetails postItem={eachItem} key={eachItem.postId} />
-            ))}
-          </ul>
-        </div>
+        {searchPostList.length > 0 ? (
+          <>
+            <h1 className="search-heading">Search Results</h1>
+            <div className="search-card-container">
+              <ul className="post-list-container">
+                {searchPostList.map(eachItem => (
+                  <PostItemDetails postItem={eachItem} key={eachItem.postId} />
+                ))}
+              </ul>
+            </div>
+          </>
+        ) : (
+          <div className="no-search-failure-container">
+            <img
+              src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675865026/samples/InstaShare%20PNG/Group_udoax3.png"
+              alt="search not found"
+              className="no-search-view-img"
+            />
+            <h1 className="no-search-title">Search Not Found</h1>
+            <p className="no-search-text">
+              Try different keyword or search again
+            </p>
+          </div>
+        )}
       </>
     )
   }
@@ -337,10 +377,19 @@ class UserProfile extends Component {
     const {isSearched} = this.state
     return (
       <div className="user-profilePage-container">
-        <Header
-          onClickedSearchBar={this.onClickedSearchBar}
-          onChangeSearchStatus={this.onChangeSearchStatus}
-        />
+        <div className="lg-header">
+          <Header
+            onClickedSearchBar={this.onClickedSearchBar}
+            onChangeSearchStatus={this.onChangeSearchStatus}
+          />
+        </div>
+        <div className="sm-header">
+          <SmHeader
+            onClickedSearchBar={this.onClickedSearchBar}
+            onChangeSearchStatus={this.onChangeSearchStatus}
+            selectedRoute={isSearched === false ? null : 'Search'}
+          />
+        </div>
         <div className="user-profile-section-container">
           <div className="user-profile-content-container">
             {isSearched === false

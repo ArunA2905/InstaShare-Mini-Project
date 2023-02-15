@@ -2,7 +2,25 @@
   margin-right: 20px;
   margin-bottom: 20px;
 }
+@media all and (max-width: 768px) {
+  .post-item-list {
+    margin-right: 8px;
+    margin-bottom: 4px;
+  }
+}
 .postIem {
   height: 300px;
   width: 300px;
+}
+@media all and (max-width: 768px) {
+  .postIem {
+    height: 200px;
+    width: 200px;
+  }
+}
+@media all and (max-width: 568px) {
+  .postIem {
+    height: 160px;
+    width: 160px;
+  }
 }

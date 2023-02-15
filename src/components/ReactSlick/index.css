@@ -2,23 +2,58 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 92%;
+  width: 100%;
 }
-
 .slick-container {
   margin-top: 20px;
-  width: 95%;
+  width: 98%;
 }
 .slick-item {
   margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-
+@media all and (max-width: 768px) {
+  .slick-item {
+    margin-left: 20px;
+  }
+}
+.story-pic-card {
+  height: 110px;
+  width: 110px;
+  border: double 2px transparent;
+  border-radius: 50%;
+  background-image: linear-gradient(white, white),
+    radial-gradient(circle at top left, #e20337, #c60188, #7700c3);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+@media all and (max-width: 768px) {
+  .story-pic-card {
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+  }
+}
 .logo-image {
   width: 100px;
   height: 100px;
   border-radius: 50px;
 }
-
+@media all and (max-width: 768px) {
+  .logo-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+  }
+}
 .story-user-name {
   font-family: 'Roboto';
   font-style: normal;
@@ -27,7 +62,13 @@
   line-height: 24px;
   color: #262626;
 }
-
+@media all and (max-width: 768px) {
+  .story-user-name {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+  }
+}
 /* You can change the CSS color to style the Next and 
 Previous Arrow buttons according to your project */
 

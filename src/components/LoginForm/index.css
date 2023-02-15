@@ -6,36 +6,80 @@
   height: 100vh;
 }
 .login-form-img {
-  width: 30%;
-  padding-right: 20px;
+  width: 34%;
+  padding-right: 70px;
+}
+@media all and (max-width: 1300px) {
+  .login-form-img {
+    width: 40%;
+    padding-right: 40px;
+  }
+}
+@media all and (max-width: 768px) {
+  .login-form-img {
+    display: none;
+  }
 }
 .login-form-card {
-  width: 22%;
+  width: 26%;
   min-height: 40%;
   background: #fefeff;
   box-shadow: 0px 8px 40px rgba(7, 7, 7, 0.08);
   border-radius: 8px;
-  margin-left: 120px;
+  margin-left: 70px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 40px;
 }
+@media all and (max-width: 1300px) {
+  .login-form-card {
+    width: 40%;
+    margin-left: 40px;
+  }
+}
+@media all and (max-width: 768px) {
+  .login-form-card {
+    background: transparent;
+    width: 80%;
+    min-height: 70%;
+    padding: 20px;
+    box-shadow: none;
+    border-radius: 0%;
+    margin-left: 0px;
+  }
+}
 .login-logo-card {
   text-align: center;
 }
 .website-logo {
-  width: 100px;
+  width: 80px;
+}
+@media all and (max-width: 768px) {
+  .website-logo {
+    width: 22%;
+  }
 }
 .login-logo-title {
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
+  font-size: 28px;
   line-height: 32px;
   color: #262626;
   margin-top: 5px;
 }
+@media all and (max-width: 768px) {
+  .login-logo-title {
+    font-size: 24px;
+  }
+}
+@media all and (max-width: 468px) {
+  .login-logo-title {
+    font-size: 18px;
+  }
+}
+
 .label-heading {
   font-family: 'Roboto';
   font-style: normal;
@@ -47,8 +91,16 @@
   color: #262626;
   margin-top: 22px;
 }
+@media all and (max-width: 768px) {
+  .label-heading {
+    font-weight: 600;
+    font-size: 16px;
+  }
+}
+
 .inputForm {
   background: #eeeeee;
+  font-weight: 500;
   border-radius: 2px;
   border: none;
   height: 34px;
@@ -57,6 +109,13 @@
   cursor: pointer;
   outline: none;
 }
+@media all and (max-width: 768px) {
+  .inputForm {
+    height: 38px;
+    margin-top: 16px;
+  }
+}
+
 .error-msg {
   font-family: 'Roboto';
   font-style: normal;
@@ -67,6 +126,13 @@
   padding-top: 5px;
   margin: 0px;
 }
+@media all and (max-width: 768px) {
+  .error-msg {
+    font-weight: 500;
+    font-size: 16px;
+  }
+}
+
 .login-btn {
   font-family: 'Roboto';
   font-style: normal;
@@ -81,4 +147,10 @@
   cursor: pointer;
   margin-top: 16px;
   height: 34px;
+}
+@media all and (max-width: 768px) {
+  .login-btn {
+    height: 38px;
+    margin-top: 22px;
+  }
 }

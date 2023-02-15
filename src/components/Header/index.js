@@ -37,6 +37,10 @@ class Header extends Component {
             }
           }
 
+          const onClickedChangeRoute = () => {
+            onChangeSearchStatus('')
+          }
+
           return (
             <>
               <nav className="navbar-container">
@@ -72,7 +76,7 @@ class Header extends Component {
                       </button>
                     </div>
                     <ul className="link-card">
-                      <li>
+                      <li onClick={onClickedChangeRoute}>
                         <Link
                           to="/"
                           className={
@@ -84,7 +88,7 @@ class Header extends Component {
                           Home
                         </Link>
                       </li>
-                      <li>
+                      <li onClick={onClickedChangeRoute}>
                         <Link
                           to="/my-profile"
                           className={

@@ -1,7 +1,6 @@
 import {Component} from 'react'
 import Slider from 'react-slick'
 
-/* Add css to your project */
 import './index.css'
 
 const settings = {
@@ -11,6 +10,20 @@ const settings = {
   slidesToShow: 7,
   slidesToScroll: 1,
   responsive: [
+    {
+      breakpoint: 1500,
+      settings: {
+        slidesToShow: 6,
+        slidesToScroll: 1,
+      },
+    },
+    {
+      breakpoint: 1300,
+      settings: {
+        slidesToShow: 5,
+        slidesToScroll: 1,
+      },
+    },
     {
       breakpoint: 1024,
       settings: {
@@ -26,7 +39,7 @@ const settings = {
       },
     },
     {
-      breakpoint: 480,
+      breakpoint: 358,
       settings: {
         slidesToShow: 2,
         slidesToScroll: 1,
@@ -45,7 +58,9 @@ class ReactSlick extends Component {
           const {storyUrl, userID, userName} = eachLogo
           return (
             <div className="slick-item" key={userID}>
-              <img className="logo-image" src={storyUrl} alt="user story" />
+              <div className="story-pic-card">
+                <img className="logo-image" src={storyUrl} alt="user story" />
+              </div>
               <p className="story-user-name">{userName}</p>
             </div>
           )
