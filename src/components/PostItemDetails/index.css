@@ -12,6 +12,9 @@
     border: none;
   }
 }
+.post-item-details-dark-mode {
+  background: #000000;
+}
 .username-profile-card {
   display: flex;
   align-items: center;
@@ -40,6 +43,10 @@
     width: 50px;
     border-radius: 50%;
   }
+}
+.dark-profile-pic-card {
+  background-image: linear-gradient(black, black),
+    radial-gradient(circle at top left, #e20337, #c60188, #7700c3);
 }
 .user-profile {
   height: 45px;
@@ -157,4 +164,10 @@
 }
 .post-link {
   text-decoration: none;
+}
+.post-item-dark-text {
+  color: #ffffff;
+}
+.dark-mode-icon {
+  color: #ffffff;
 }

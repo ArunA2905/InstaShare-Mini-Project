@@ -90,6 +90,10 @@
   align-items: center;
   color: #262626;
 }
+.sm-light-icon {
+  color: #ffffff;
+}
+
 .sm-selectedLink {
   color: #4094ef;
 }
@@ -130,6 +134,7 @@
   border: none;
   outline: none;
   cursor: pointer;
+  margin-left: 10px;
 }
 .closeMenu-button {
   background-color: transparent;
@@ -139,4 +144,16 @@
 }
 .sm-header-line {
   border: 1px whitesmoke solid;
+}
+.sm-dark-header-line {
+  border: 1px #f2f3eb solid;
+}
+.themeBtn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+.sm-header-dark-bg {
+  background-color: #000000;
 }

@@ -1,7 +1,11 @@
 import {Component} from 'react'
 import Slider from 'react-slick'
 
+import GlobalStyle from './SlickStyle'
+
 import './index.css'
+
+import RouteContext from '../../Context/RouteContext'
 
 const settings = {
   dots: false,
@@ -53,19 +57,40 @@ class ReactSlick extends Component {
     const {userStoryArray} = this.props
 
     return (
-      <Slider {...settings}>
-        {userStoryArray.map(eachLogo => {
-          const {storyUrl, userID, userName} = eachLogo
+      <RouteContext.Consumer>
+        {value => {
+          const {isDarkMode} = value
+
+          const picCardBg = isDarkMode ? 'slick-dark-mode-pic-card' : null
+
+          const darkModeText = isDarkMode ? 'slick-dark-mode-text' : null
+
           return (
-            <div className="slick-item" key={userID}>
-              <div className="story-pic-card">
-                <img className="logo-image" src={storyUrl} alt="user story" />
-              </div>
-              <p className="story-user-name">{userName}</p>
-            </div>
+            <>
+              <GlobalStyle isDark={isDarkMode} />
+              <Slider {...settings}>
+                {userStoryArray.map(eachLogo => {
+                  const {storyUrl, userID, userName} = eachLogo
+                  return (
+                    <div className="slick-item" key={userID}>
+                      <div className={`story-pic-card ${picCardBg}`}>
+                        <img
+                          className="logo-image"
+                          src={storyUrl}
+                          alt="user story"
+                        />
+                      </div>
+                      <p className={`story-user-name ${darkModeText}`}>
+                        {userName}
+                      </p>
+                    </div>
+                  )
+                })}
+              </Slider>
+            </>
           )
-        })}
-      </Slider>
+        }}
+      </RouteContext.Consumer>
     )
   }
 

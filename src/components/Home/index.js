@@ -12,6 +12,8 @@ import ReactSlick from '../ReactSlick'
 
 import PostItemDetails from '../PostItemDetails'
 
+import RouteContext from '../../Context/RouteContext'
+
 const status = {
   initial: 'LOADING',
   success: 'SUCCESS',
@@ -198,32 +200,55 @@ class Home extends Component {
     const {searchPostList} = this.state
 
     return (
-      <>
-        {searchPostList.length > 0 ? (
-          <>
-            <h1 className="search-heading">Search Results</h1>
-            <div className="search-card-container">
-              <ul className="post-list-container">
-                {searchPostList.map(eachItem => (
-                  <PostItemDetails postItem={eachItem} key={eachItem.postId} />
-                ))}
-              </ul>
-            </div>
-          </>
-        ) : (
-          <div className="no-search-failure-container">
-            <img
-              src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675865026/samples/InstaShare%20PNG/Group_udoax3.png"
-              alt="search not found"
-              className="no-search-view-img"
-            />
-            <h1 className="no-search-title">Search Not Found</h1>
-            <p className="no-search-text">
-              Try different keyword or search again
-            </p>
-          </div>
-        )}
-      </>
+      <RouteContext.Consumer>
+        {value => {
+          const {isDarkMode} = value
+
+          const profileDarkText = isDarkMode ? 'home-dark-mode-text' : null
+
+          const profileSearchDarkContainer = isDarkMode
+            ? 'home-search-dark-card'
+            : null
+
+          return (
+            <>
+              {searchPostList.length > 0 ? (
+                <>
+                  <h1 className={`search-heading ${profileDarkText}`}>
+                    Search Results
+                  </h1>
+                  <div
+                    className={`search-card-container ${profileSearchDarkContainer}`}
+                  >
+                    <ul className="post-list-container">
+                      {searchPostList.map(eachItem => (
+                        <PostItemDetails
+                          postItem={eachItem}
+                          key={eachItem.postId}
+                        />
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              ) : (
+                <div className="home-no-search-failure-container">
+                  <img
+                    src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675865026/samples/InstaShare%20PNG/Group_udoax3.png"
+                    alt="search not found"
+                    className="home-no-search-view-img"
+                  />
+                  <h1 className={`home-no-search-title ${profileDarkText}`}>
+                    Search Not Found
+                  </h1>
+                  <p className={`home-no-search-text ${profileDarkText}`}>
+                    Try different keyword or search again
+                  </p>
+                </div>
+              )}
+            </>
+          )
+        }}
+      </RouteContext.Consumer>
     )
   }
 
@@ -240,59 +265,92 @@ class Home extends Component {
   }
 
   renderPostFailureView = () => (
-    <div className="home-failure-container">
-      <img
-        src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675777842/samples/InstaShare%20PNG/Icon_t6zrkg.png"
-        alt="failure view"
-        className="home-failure-view-img"
-      />
-      <p className="home-error-msg">Something went wrong. Please try again</p>
-      <button
-        type="button"
-        className="home-failure-btn"
-        onClick={this.onClickedPostTryAgain}
-      >
-        Try again
-      </button>
-    </div>
+    <RouteContext.Consumer>
+      {value => {
+        const {isDarkMode} = value
+
+        const profileDarkText = isDarkMode ? 'home-dark-mode-text' : null
+        return (
+          <div className="home-failure-container">
+            <img
+              src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675777842/samples/InstaShare%20PNG/Icon_t6zrkg.png"
+              alt="failure view"
+              className="home-failure-view-img"
+            />
+            <p className={`home-error-msg ${profileDarkText}`}>
+              Something went wrong. Please try again
+            </p>
+            <button
+              type="button"
+              className="home-failure-btn"
+              onClick={this.onClickedPostTryAgain}
+            >
+              Try again
+            </button>
+          </div>
+        )
+      }}
+    </RouteContext.Consumer>
   )
 
   renderStoryFailureView = () => (
-    <div className="home-failure-container">
-      <img
-        src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675777842/samples/InstaShare%20PNG/Icon_t6zrkg.png"
-        alt="failure view"
-        className="home-failure-view-img"
-      />
-      <p className="home-error-msg">Something went wrong. Please try again</p>
-      <button
-        type="button"
-        className="home-failure-btn"
-        onClick={this.onClickedStoryTryAgain}
-      >
-        Try again
-      </button>
-    </div>
+    <RouteContext.Consumer>
+      {value => {
+        const {isDarkMode} = value
+
+        const profileDarkText = isDarkMode ? 'home-dark-mode-text' : null
+        return (
+          <div className="home-failure-container">
+            <img
+              src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675777842/samples/InstaShare%20PNG/Icon_t6zrkg.png"
+              alt="failure view"
+              className="home-failure-view-img"
+            />
+            <p className={`home-error-msg ${profileDarkText}`}>
+              Something went wrong. Please try again
+            </p>
+            <button
+              type="button"
+              className="home-failure-btn"
+              onClick={this.onClickedStoryTryAgain}
+            >
+              Try again
+            </button>
+          </div>
+        )
+      }}
+    </RouteContext.Consumer>
   )
 
   renderSearchFailureView = () => (
-    <div className="failure-bg">
-      <div className="home-failure-container">
-        <img
-          src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675935116/samples/InstaShare%20PNG/Group_7522_expew0.png"
-          alt="failure view"
-          className="search-failure-view-img"
-        />
-        <p className="home-error-msg">Something went wrong. Please try again</p>
-        <button
-          type="button"
-          className="home-failure-btn"
-          onClick={this.onClickedStoryTryAgain}
-        >
-          Try again
-        </button>
-      </div>
-    </div>
+    <RouteContext.Consumer>
+      {value => {
+        const {isDarkMode} = value
+
+        const profileDarkText = isDarkMode ? 'home-dark-mode-text' : null
+        return (
+          <div className="failure-bg">
+            <div className="home-failure-container">
+              <img
+                src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675935116/samples/InstaShare%20PNG/Group_7522_expew0.png"
+                alt="failure view"
+                className="search-failure-view-img"
+              />
+              <p className={`home-error-msg ${profileDarkText}`}>
+                Something went wrong. Please try again
+              </p>
+              <button
+                type="button"
+                className="home-failure-btn"
+                onClick={this.onClickedStoryTryAgain}
+              >
+                Try again
+              </button>
+            </div>
+          </div>
+        )
+      }}
+    </RouteContext.Consumer>
   )
 
   renderStorySection = () => {
@@ -360,37 +418,49 @@ class Home extends Component {
     const {searchCaption, isSearched} = this.state
 
     return (
-      <div className="homePage-container">
-        <div className="lg-header">
-          <Header
-            searchCaption={searchCaption}
-            onClickedSearchBar={this.onClickedSearchBar}
-            onChangeSearchStatus={this.onChangeSearchStatus}
-            selectedRoute={isSearched === false ? 'Home' : undefined}
-          />
-        </div>
-        <div className="sm-header">
-          <SmHeader
-            searchCaption={searchCaption}
-            onClickedSearchBar={this.onClickedSearchBar}
-            onChangeSearchStatus={this.onChangeSearchStatus}
-            selectedRoute={isSearched === false ? 'Home' : 'Search'}
-          />
-        </div>
-        <div className="home-post-container">
-          <div className="home-content-container">
-            <div className="home-story-container">
-              {isSearched === false ? this.renderStorySection() : null}
+      <RouteContext.Consumer>
+        {value => {
+          const {isDarkMode} = value
+
+          const homeDarkBg = isDarkMode ? 'home-dark-bg' : null
+
+          return (
+            <div className={`homePage-container ${homeDarkBg}`}>
+              <div className="lg-header">
+                <Header
+                  searchCaption={searchCaption}
+                  onClickedSearchBar={this.onClickedSearchBar}
+                  onChangeSearchStatus={this.onChangeSearchStatus}
+                  selectedRoute={isSearched === false ? 'Home' : undefined}
+                />
+              </div>
+              <div className="sm-header">
+                <SmHeader
+                  searchCaption={searchCaption}
+                  onClickedSearchBar={this.onClickedSearchBar}
+                  onChangeSearchStatus={this.onChangeSearchStatus}
+                  selectedRoute={isSearched === false ? 'Home' : 'Search'}
+                />
+              </div>
+              <div className="home-post-container">
+                <div className="home-content-container">
+                  <div className="home-story-container">
+                    {isSearched === false ? this.renderStorySection() : null}
+                  </div>
+                  <hr className="home-story-line" />
+                  {isSearched === false ? (
+                    <div className="post-section">
+                      {this.renderPostSection()}
+                    </div>
+                  ) : (
+                    this.renderSearchSection()
+                  )}
+                </div>
+              </div>
             </div>
-            <hr className="home-story-line" />
-            {isSearched === false ? (
-              <div className="post-section">{this.renderPostSection()}</div>
-            ) : (
-              this.renderSearchSection()
-            )}
-          </div>
-        </div>
-      </div>
+          )
+        }}
+      </RouteContext.Consumer>
     )
   }
 }

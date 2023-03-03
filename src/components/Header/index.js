@@ -3,6 +3,8 @@ import {Link, withRouter} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import './index.css'
 import {FaSearch} from 'react-icons/fa'
+import {IoMdMoon} from 'react-icons/io'
+import {RiSunFill} from 'react-icons/ri'
 
 import RouteContext from '../../Context/RouteContext'
 
@@ -12,7 +14,12 @@ class Header extends Component {
     return (
       <RouteContext.Consumer>
         {value => {
-          const {onChangeSearchCaption, searchCaption} = value
+          const {
+            onChangeSearchCaption,
+            searchCaption,
+            isDarkMode,
+            onChangeDarkMode,
+          } = value
 
           const onChangeSearchInput = event => {
             onChangeSearchCaption(event.target.value)
@@ -41,9 +48,19 @@ class Header extends Component {
             onChangeSearchStatus('')
           }
 
+          const onClickedDarkBtn = () => {
+            onChangeDarkMode()
+          }
+
+          const headerBgColor = isDarkMode ? 'header-dark-bg' : null
+
+          const headerDarkModeText = isDarkMode
+            ? 'header-dark-mode-text-color'
+            : null
+
           return (
             <>
-              <nav className="navbar-container">
+              <nav className={`navbar-container ${headerBgColor}`}>
                 <div className="navbar-content">
                   <div className="navbar-logo-card">
                     <Link to="/">
@@ -53,7 +70,9 @@ class Header extends Component {
                         className="navbar-website-logo"
                       />
                     </Link>
-                    <h1 className="navbar-logo-title">Insta Share</h1>
+                    <h1 className={`navbar-logo-title ${headerDarkModeText}`}>
+                      Insta Share
+                    </h1>
                   </div>
                   <div className="navbar-content-card">
                     <div className="search-card">
@@ -81,8 +100,8 @@ class Header extends Component {
                           to="/"
                           className={
                             selectedRoute === 'Home'
-                              ? `nav-link selectedLink`
-                              : 'nav-link'
+                              ? `nav-link ${headerDarkModeText} selectedLink`
+                              : `nav-link ${headerDarkModeText}`
                           }
                         >
                           Home
@@ -93,13 +112,24 @@ class Header extends Component {
                           to="/my-profile"
                           className={
                             selectedRoute === 'my-Profile'
-                              ? `nav-link selectedLink`
-                              : 'nav-link'
+                              ? `nav-link ${headerDarkModeText} selectedLink`
+                              : `nav-link ${headerDarkModeText}`
                           }
                         >
                           Profile
                         </Link>
                       </li>
+                      <button
+                        type="button"
+                        className="themeBtn"
+                        onClick={onClickedDarkBtn}
+                      >
+                        {isDarkMode ? (
+                          <RiSunFill size={24} className="light-icon" />
+                        ) : (
+                          <IoMdMoon size={22} />
+                        )}
+                      </button>
                     </ul>
                     <button
                       type="button"

@@ -42,6 +42,10 @@
     border-radius: 50%;
   }
 }
+.slick-dark-mode-pic-card {
+  background-image: linear-gradient(black, black),
+    radial-gradient(circle at top left, #e20337, #c60188, #7700c3);
+}
 .logo-image {
   width: 100px;
   height: 100px;
@@ -69,10 +73,9 @@
     line-height: 20px;
   }
 }
+
+.slick-dark-mode-text {
+  color: #ffffff;
+}
 /* You can change the CSS color to style the Next and 
 Previous Arrow buttons according to your project */
-
-.slick-prev:before,
-.slick-next:before {
-  color: black;
-}

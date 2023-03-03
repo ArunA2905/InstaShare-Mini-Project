@@ -9,6 +9,9 @@ import {FaSearch} from 'react-icons/fa'
 import {GiHamburgerMenu} from 'react-icons/gi'
 import {AiFillCloseCircle} from 'react-icons/ai'
 
+import {IoMdMoon} from 'react-icons/io'
+import {RiSunFill} from 'react-icons/ri'
+
 import RouteContext from '../../Context/RouteContext'
 
 class Header extends Component {
@@ -35,7 +38,12 @@ class Header extends Component {
     return (
       <RouteContext.Consumer>
         {value => {
-          const {onChangeSearchCaption, searchCaption} = value
+          const {
+            onChangeSearchCaption,
+            searchCaption,
+            isDarkMode,
+            onChangeDarkMode,
+          } = value
 
           const onChangeSearchInput = event => {
             onChangeSearchCaption(event.target.value)
@@ -60,8 +68,12 @@ class Header extends Component {
             }
           }
 
+          const smHeaderDarkBg = isDarkMode ? 'sm-header-dark-bg' : null
+
+          const smHeaderDarkModeText = isDarkMode ? 'sm-light-icon' : null
+
           const renderSearchCard = () => (
-            <div className="sm-navbar-container">
+            <div className={`sm-navbar-container ${smHeaderDarkBg}`}>
               <div className="sm-navbar-content-card">
                 <div className="sm-search-card">
                   <input
@@ -84,7 +96,7 @@ class Header extends Component {
                 </div>
                 <button
                   type="button"
-                  className="closeMenu-button"
+                  className={`closeMenu-button ${smHeaderDarkModeText}`}
                   onClick={this.onClickedCloseMenu}
                 >
                   <AiFillCloseCircle size={25} />
@@ -98,7 +110,7 @@ class Header extends Component {
           }
 
           const renderNavBarContent = () => (
-            <div className="sm-navbar-container">
+            <div className={`sm-navbar-container ${smHeaderDarkBg}`}>
               <div className="sm-navbar-content-card">
                 <ul className="sm-link-card">
                   <li
@@ -109,8 +121,8 @@ class Header extends Component {
                       to="/"
                       className={
                         selectedRoute === 'Home'
-                          ? `sm-nav-link sm-selectedLink`
-                          : 'sm-nav-link'
+                          ? `sm-nav-link ${smHeaderDarkModeText} sm-selectedLink`
+                          : `sm-nav-link ${smHeaderDarkModeText}`
                       }
                     >
                       Home
@@ -119,8 +131,8 @@ class Header extends Component {
                   <li
                     className={
                       selectedRoute === 'Search'
-                        ? `sm-nav-link sm-nav-list-item sm-selectedLink`
-                        : 'sm-nav-link sm-nav-list-item'
+                        ? `sm-nav-link sm-nav-list-item ${smHeaderDarkModeText} sm-selectedLink`
+                        : `sm-nav-link sm-nav-list-item ${smHeaderDarkModeText}`
                     }
                     onClick={this.onClickedSearch}
                   >
@@ -134,8 +146,8 @@ class Header extends Component {
                       to="/my-profile"
                       className={
                         selectedRoute === 'my-Profile'
-                          ? `sm-nav-link sm-selectedLink`
-                          : 'sm-nav-link'
+                          ? `sm-nav-link ${smHeaderDarkModeText} sm-selectedLink`
+                          : `sm-nav-link ${smHeaderDarkModeText}`
                       }
                     >
                       Profile
@@ -152,7 +164,7 @@ class Header extends Component {
 
                 <button
                   type="button"
-                  className="closeMenu-button"
+                  className={`closeMenu-button ${smHeaderDarkModeText}`}
                   onClick={this.onClickedCloseMenu}
                 >
                   <AiFillCloseCircle size={25} />
@@ -164,9 +176,15 @@ class Header extends Component {
           const renderNavContent = () =>
             onSearch ? renderSearchCard() : renderNavBarContent()
 
+          const onClickedDarkBtn = () => {
+            onChangeDarkMode()
+          }
+
+          const smHeaderLineDarkMode = isDarkMode ? 'sm-dark-header-line' : null
+
           return (
             <>
-              <nav className="sm-navbar-container">
+              <nav className={`sm-navbar-container ${smHeaderDarkBg}`}>
                 <div className="sm-navbar-content">
                   <div className="sm-navbar-logo-card">
                     <Link to="/">
@@ -176,20 +194,37 @@ class Header extends Component {
                         className="sm-navbar-website-logo"
                       />
                     </Link>
-                    <h1 className="sm-navbar-logo-title">Insta Share</h1>
+                    <h1
+                      className={`sm-navbar-logo-title ${smHeaderDarkModeText}`}
+                    >
+                      Insta Share
+                    </h1>
                   </div>
+                  <div className="sm-navbar-logo-card">
+                    <button
+                      type="button"
+                      className="themeBtn"
+                      onClick={onClickedDarkBtn}
+                    >
+                      {isDarkMode ? (
+                        <RiSunFill size={24} className="sm-light-icon" />
+                      ) : (
+                        <IoMdMoon size={22} />
+                      )}
+                    </button>
 
-                  <button
-                    type="button"
-                    className="hamburger-button"
-                    onClick={this.onClickedHamburger}
-                  >
-                    <GiHamburgerMenu size={25} />
-                  </button>
+                    <button
+                      type="button"
+                      className={`hamburger-button ${smHeaderDarkModeText}`}
+                      onClick={this.onClickedHamburger}
+                    >
+                      <GiHamburgerMenu size={25} />
+                    </button>
+                  </div>
                 </div>
               </nav>
               {onHamburger ? renderNavContent() : null}
-              <hr className="sm-header-line" />
+              <hr className={`sm-header-line ${smHeaderLineDarkMode}`} />
             </>
           )
         }}

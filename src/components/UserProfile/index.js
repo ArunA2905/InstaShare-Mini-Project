@@ -13,6 +13,8 @@ import UserPostItem from '../UserPostItem'
 
 import PostItemDetails from '../PostItemDetails'
 
+import RouteContext from '../../Context/RouteContext'
+
 const status = {
   initial: 'LOADING',
   success: 'SUCCESS',
@@ -94,39 +96,80 @@ class UserProfile extends Component {
       userID,
     } = myProfile
     return (
-      <>
-        <h1 className="user-profile-name sm-user-profile-name">{userName}</h1>
-        <div className="user-profile-details-container">
-          <img
-            src={profilePic}
-            alt="user profile"
-            className="user-profile-pic"
-          />
-          <div className="user-profile-details-card">
-            <h1 className="user-profile-name lg-user-profile-name">
-              {userName}
-            </h1>
-            <div className="user-count-container">
-              <div className="user-count-card">
-                <span className="user-count">{postsCount}</span>
-                <p className="user-count-details">posts</p>
+      <RouteContext.Consumer>
+        {value => {
+          const {isDarkMode} = value
+
+          const profileDarkText = isDarkMode
+            ? 'user-profile-dark-mode-text'
+            : null
+          return (
+            <>
+              <h1
+                className={`profileDarkText user-profile-name sm-user-profile-name ${profileDarkText}`}
+              >
+                {userName}
+              </h1>
+              <div className="user-profile-details-container">
+                <img
+                  src={profilePic}
+                  alt="user profile"
+                  className="user-profile-pic"
+                />
+                <div className="user-profile-details-card">
+                  <h1
+                    className={`user-profile-name lg-user-profile-name ${profileDarkText}`}
+                  >
+                    {userName}
+                  </h1>
+                  <div className="user-count-container">
+                    <div className="user-count-card">
+                      <span className={`user-count ${profileDarkText}`}>
+                        {postsCount}
+                      </span>
+                      <p className={`user-count-details ${profileDarkText}`}>
+                        posts
+                      </p>
+                    </div>
+                    <div className="user-count-card">
+                      <span className={`user-count ${profileDarkText}`}>
+                        {followersCount}
+                      </span>
+                      <p className={`user-count-details ${profileDarkText}`}>
+                        followers
+                      </p>
+                    </div>
+                    <div className="user-count-card">
+                      <span className={`user-count ${profileDarkText}`}>
+                        {followingCount}
+                      </span>
+                      <p className={`user-count-details ${profileDarkText}`}>
+                        following
+                      </p>
+                    </div>
+                  </div>
+                  <p
+                    className={`lg-user-name-bio user-name-bio ${profileDarkText}`}
+                  >
+                    {userID}
+                  </p>
+                  <p className={`lg-user-bio user-bio ${profileDarkText}`}>
+                    {userBio}
+                  </p>
+                </div>
               </div>
-              <div className="user-count-card">
-                <span className="user-count">{followersCount}</span>
-                <p className="user-count-details">followers</p>
-              </div>
-              <div className="user-count-card">
-                <span className="user-count">{followingCount}</span>
-                <p className="user-count-details">following</p>
-              </div>
-            </div>
-            <p className="lg-user-name-bio user-name-bio">{userID}</p>
-            <p className="lg-user-bio user-bio">{userBio}</p>
-          </div>
-        </div>
-        <p className="sm-user-name-bio user-name-bio">{userID}</p>
-        <p className="sm-user-bio user-bio">{userBio}</p>
-      </>
+              <p
+                className={`sm-user-name-bio user-name-bio ${profileDarkText}`}
+              >
+                {userID}
+              </p>
+              <p className={`sm-user-bio user-bio ${profileDarkText}`}>
+                {userBio}
+              </p>
+            </>
+          )
+        }}
+      </RouteContext.Consumer>
     )
   }
 
@@ -134,13 +177,32 @@ class UserProfile extends Component {
     const {storyList} = this.state
 
     return (
-      <ul className="user-story-container">
-        {storyList.map(each => (
-          <li key={each.id} className="user-story-card">
-            <img src={each.image} alt="user story" className="user-story" />
-          </li>
-        ))}
-      </ul>
+      <RouteContext.Consumer>
+        {value => {
+          const {isDarkMode} = value
+
+          const profileDarkStoryCard = isDarkMode
+            ? 'userProfile-dark-story-card'
+            : null
+
+          return (
+            <ul className="user-story-container">
+              {storyList.map(each => (
+                <li
+                  key={each.id}
+                  className={`user-story-card ${profileDarkStoryCard}`}
+                >
+                  <img
+                    src={each.image}
+                    alt="user story"
+                    className="user-story"
+                  />
+                </li>
+              ))}
+            </ul>
+          )
+        }}
+      </RouteContext.Consumer>
     )
   }
 
@@ -148,28 +210,54 @@ class UserProfile extends Component {
     const {postList} = this.state
 
     return (
-      <>
-        <div className="post-card">
-          <BsGrid3X3 className="post-card-icon" />
-          <h1 className="posts-title">Posts</h1>
-        </div>
-        {postList.length > 0 ? (
-          <ul className="post-item-container">
-            {postList.map(each => (
-              <UserPostItem key={each.id} postItem={each} route="user" />
-            ))}
-          </ul>
-        ) : (
-          <div className="user-no-post-container">
-            <div className="user-no-post-card">
-              <div className="no-post-icon-card">
-                <BiCamera className="no-post-icon" />
+      <RouteContext.Consumer>
+        {value => {
+          const {isDarkMode} = value
+
+          const userProfileDarkIcon = isDarkMode
+            ? 'user-profile-dark-mode-icon'
+            : null
+
+          const userProfileDarkText = isDarkMode
+            ? 'user-profile-dark-mode-text'
+            : null
+
+          const userNoPostCardDark = isDarkMode
+            ? 'userProfile-no-post-dark-card'
+            : null
+
+          return (
+            <>
+              <div className="post-card">
+                <BsGrid3X3
+                  className={`post-card-icon ${userProfileDarkIcon}`}
+                />
+                <h1 className={`posts-title ${userProfileDarkText}`}>Posts</h1>
               </div>
-              <h1 className="user-No-post-msg">No Posts</h1>
-            </div>
-          </div>
-        )}
-      </>
+              {postList.length > 0 ? (
+                <ul className="post-item-container">
+                  {postList.map(each => (
+                    <UserPostItem key={each.id} postItem={each} route="user" />
+                  ))}
+                </ul>
+              ) : (
+                <div className="user-no-post-container">
+                  <div className="user-no-post-card">
+                    <div className={`no-post-icon-card ${userNoPostCardDark}`}>
+                      <BiCamera
+                        className={`no-post-icon ${userProfileDarkIcon}`}
+                      />
+                    </div>
+                    <h1 className={`user-No-post-msg ${userProfileDarkText}`}>
+                      No Posts
+                    </h1>
+                  </div>
+                </div>
+              )}
+            </>
+          )
+        }}
+      </RouteContext.Consumer>
     )
   }
 
@@ -194,25 +282,36 @@ class UserProfile extends Component {
   }
 
   renderFailedView = () => (
-    <div className="user-profile-failure-container">
-      <div className="user-profile-failure-card">
-        <img
-          src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675935116/samples/InstaShare%20PNG/Group_7522_expew0.png"
-          alt="failure view"
-          className="user-profile-failure-view-img"
-        />
-        <p className="user-profile-error-msg">
-          Something went wrong. Please try again
-        </p>
-        <button
-          type="button"
-          className="user-profile-failure-btn"
-          onClick={this.onClickedTryAgain}
-        >
-          Try again
-        </button>
-      </div>
-    </div>
+    <RouteContext.Consumer>
+      {value => {
+        const {isDarkMode} = value
+
+        const profileDarkText = isDarkMode
+          ? 'user-profile-dark-mode-text'
+          : null
+        return (
+          <div className="user-profile-failure-container">
+            <div className="user-profile-failure-card">
+              <img
+                src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675935116/samples/InstaShare%20PNG/Group_7522_expew0.png"
+                alt="failure view"
+                className="user-profile-failure-view-img"
+              />
+              <p className={`user-profile-error-msg ${profileDarkText}`}>
+                Something went wrong. Please try again
+              </p>
+              <button
+                type="button"
+                className="user-profile-failure-btn"
+                onClick={this.onClickedTryAgain}
+              >
+                Try again
+              </button>
+            </div>
+          </div>
+        )
+      }}
+    </RouteContext.Consumer>
   )
 
   renderProfileSection = () => {
@@ -301,55 +400,93 @@ class UserProfile extends Component {
   }
 
   renderSearchFailureView = () => (
-    <div className="failure-bg">
-      <div className="home-failure-container">
-        <img
-          src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675935116/samples/InstaShare%20PNG/Group_7522_expew0.png"
-          alt="failure view"
-          className="search-failure-view-img"
-        />
-        <p className="home-error-msg">Something went wrong. Please try again</p>
-        <button
-          type="button"
-          className="home-failure-btn"
-          onClick={this.onClickedStoryTryAgain}
-        >
-          Try again
-        </button>
-      </div>
-    </div>
+    <RouteContext.Consumer>
+      {value => {
+        const {isDarkMode} = value
+
+        const profileDarkText = isDarkMode
+          ? 'user-profile-dark-mode-text'
+          : null
+        return (
+          <div className="failure-bg">
+            <div className="home-failure-container">
+              <img
+                src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675935116/samples/InstaShare%20PNG/Group_7522_expew0.png"
+                alt="failure view"
+                className="search-failure-view-img"
+              />
+              <p className={`home-error-msg ${profileDarkText}`}>
+                Something went wrong. Please try again
+              </p>
+              <button
+                type="button"
+                className="home-failure-btn"
+                onClick={this.onClickedStoryTryAgain}
+              >
+                Try again
+              </button>
+            </div>
+          </div>
+        )
+      }}
+    </RouteContext.Consumer>
   )
 
   renderSearchCaption = () => {
     const {searchPostList} = this.state
 
     return (
-      <>
-        {searchPostList.length > 0 ? (
-          <>
-            <h1 className="search-heading">Search Results</h1>
-            <div className="search-card-container">
-              <ul className="post-list-container">
-                {searchPostList.map(eachItem => (
-                  <PostItemDetails postItem={eachItem} key={eachItem.postId} />
-                ))}
-              </ul>
-            </div>
-          </>
-        ) : (
-          <div className="no-search-failure-container">
-            <img
-              src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675865026/samples/InstaShare%20PNG/Group_udoax3.png"
-              alt="search not found"
-              className="no-search-view-img"
-            />
-            <h1 className="no-search-title">Search Not Found</h1>
-            <p className="no-search-text">
-              Try different keyword or search again
-            </p>
-          </div>
-        )}
-      </>
+      <RouteContext.Consumer>
+        {value => {
+          const {isDarkMode} = value
+
+          const profileDarkText = isDarkMode
+            ? 'user-profile-dark-mode-text'
+            : null
+
+          const profileSearchDarkContainer = isDarkMode
+            ? 'user-profile-search-dark-card'
+            : null
+
+          return (
+            <>
+              {searchPostList.length > 0 ? (
+                <>
+                  <h1 className={`search-heading ${profileDarkText}`}>
+                    Search Results
+                  </h1>
+                  <div
+                    className={`search-card-container ${profileSearchDarkContainer}`}
+                  >
+                    <ul className="post-list-container">
+                      {searchPostList.map(eachItem => (
+                        <PostItemDetails
+                          postItem={eachItem}
+                          key={eachItem.postId}
+                        />
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              ) : (
+                <div className="user-no-search-failure-container">
+                  <img
+                    src="https://res.cloudinary.com/dgbrmgffm/image/upload/v1675865026/samples/InstaShare%20PNG/Group_udoax3.png"
+                    alt="search not found"
+                    className="user-no-search-view-img"
+                  />
+                  <h1 className={`user-no-search-title ${profileDarkText}`}>
+                    Search Not Found
+                  </h1>
+                  <p className={`user-no-search-text ${profileDarkText}`}>
+                    Try different keyword or search again
+                  </p>
+                </div>
+              )}
+            </>
+          )
+        }}
+      </RouteContext.Consumer>
     )
   }
 
@@ -376,28 +513,40 @@ class UserProfile extends Component {
   render() {
     const {isSearched} = this.state
     return (
-      <div className="user-profilePage-container">
-        <div className="lg-header">
-          <Header
-            onClickedSearchBar={this.onClickedSearchBar}
-            onChangeSearchStatus={this.onChangeSearchStatus}
-          />
-        </div>
-        <div className="sm-header">
-          <SmHeader
-            onClickedSearchBar={this.onClickedSearchBar}
-            onChangeSearchStatus={this.onChangeSearchStatus}
-            selectedRoute={isSearched === false ? null : 'Search'}
-          />
-        </div>
-        <div className="user-profile-section-container">
-          <div className="user-profile-content-container">
-            {isSearched === false
-              ? this.renderProfileSection()
-              : this.renderSearchSection()}
-          </div>
-        </div>
-      </div>
+      <RouteContext.Consumer>
+        {value => {
+          const {isDarkMode} = value
+
+          const profileDarkModeBg = isDarkMode
+            ? 'user-profile-dark-mode-bg'
+            : null
+
+          return (
+            <div className={`user-profilePage-container ${profileDarkModeBg}`}>
+              <div className="lg-header">
+                <Header
+                  onClickedSearchBar={this.onClickedSearchBar}
+                  onChangeSearchStatus={this.onChangeSearchStatus}
+                />
+              </div>
+              <div className="sm-header">
+                <SmHeader
+                  onClickedSearchBar={this.onClickedSearchBar}
+                  onChangeSearchStatus={this.onChangeSearchStatus}
+                  selectedRoute={isSearched === false ? null : 'Search'}
+                />
+              </div>
+              <div className="user-profile-section-container">
+                <div className="user-profile-content-container">
+                  {isSearched === false
+                    ? this.renderProfileSection()
+                    : this.renderSearchSection()}
+                </div>
+              </div>
+            </div>
+          )
+        }}
+      </RouteContext.Consumer>
     )
   }
 }

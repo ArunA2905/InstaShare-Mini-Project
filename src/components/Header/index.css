@@ -83,6 +83,10 @@
   text-decoration: none;
   padding-left: 16px;
 }
+.header-dark-mode-text-color {
+  color: #ffffff;
+  font-weight: 400;
+}
 .selectedLink {
   color: #4094ef;
 }
@@ -106,4 +110,17 @@ hr {
   transform: matrix(1, 0, 0, -1, 0, 0);
   padding: 0px;
   margin: 0px;
+}
+.themeBtn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+.header-dark-bg {
+  background-color: #000000;
+}
+.light-icon {
+  color: #ffffff;
 }

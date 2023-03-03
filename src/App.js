@@ -15,18 +15,27 @@ import './App.css'
 class App extends Component {
   state = {
     searchCaption: '',
+    isDarkMode: false,
   }
 
   onChangeSearchCaption = value => {
     this.setState({searchCaption: value})
   }
 
+  onChangeDarkMode = () => {
+    this.setState(prevState => ({
+      isDarkMode: !prevState.isDarkMode,
+    }))
+  }
+
   render() {
-    const {searchCaption} = this.state
+    const {searchCaption, isDarkMode} = this.state
     return (
       <RouteContext.Provider
         value={{
           searchCaption,
+          isDarkMode,
+          onChangeDarkMode: this.onChangeDarkMode,
           onChangeSearchCaption: this.onChangeSearchCaption,
         }}
       >

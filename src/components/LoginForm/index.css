@@ -5,6 +5,9 @@
   background: #ffffff;
   height: 100vh;
 }
+.form-dark-bg {
+  background: #000000;
+}
 .login-form-img {
   width: 34%;
   padding-right: 70px;
@@ -38,6 +41,10 @@
     margin-left: 40px;
   }
 }
+.login-form-card-dark-bg {
+  background: #111111;
+}
+
 @media all and (max-width: 768px) {
   .login-form-card {
     background: transparent;
@@ -153,4 +160,7 @@
     height: 38px;
     margin-top: 22px;
   }
+}
+.login-dark-mode-text {
+  color: #ffffff;
 }
